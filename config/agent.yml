@@ -1,1 +1,4 @@
-external_data_path: data/external/records.csv
+# SportsLax 智能体配置
+rag_top_k: 5               # RAG 检索返回的最多文档数
+chat_history_max_turns: 6  # 多轮对话最多保留轮数
+chroma_persist_dir: data/chroma_db  # 向量库持久化路径

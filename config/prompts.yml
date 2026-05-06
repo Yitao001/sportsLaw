@@ -1,4 +1,3 @@
-
-main_prompt_path: prompts/main_prompt.txt
-rag_summarize_prompt_path: prompts/rag_summarize.txt
-report_prompt_path: prompts/report_prompt.txt
+legal_chat_prompt_path: prompts/legal_chat_prompt.txt
+legal_report_prompt_path: prompts/legal_report_prompt.txt
+sport_query_prompt_path: prompts/sport_query_prompt.txt

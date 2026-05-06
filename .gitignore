@@ -37,14 +37,24 @@ env/
 *.swp
 *.swo
 *~
+.workbuddy/
 
 # 日志
 logs/
 *.log
 
-# 向量数据库
+# 数据和向量数据库
+data/
 chroma_db/
 *.chroma
+
+# 临时测试文件
+test_*.py
+api_8001.py
+
+# Obsidian 配置（不提交个人配置）
+knowledge/vault/.obsidian/
+knowledge/vault/.trash/
 
 # 操作系统
 .DS_Store

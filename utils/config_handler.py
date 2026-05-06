@@ -28,31 +28,31 @@ def load_chroma_config(config_path: str=get_abs_path("config/chroma.yml"),encodi
 
 
 def load_prompts_config(config_path: str=get_abs_path("config/prompts.yml"),encoding: str="utf-8"):
-    with open(config_path,"r",encoding=encoding) as f:
-        return yaml.load(f,Loader=yaml.FullLoader)
+    try:
+        with open(config_path,"r",encoding=encoding) as f:
+            return yaml.load(f,Loader=yaml.FullLoader) or {}
+    except FileNotFoundError:
+        return {}
 
 
 def load_agent_config(config_path: str=get_abs_path("config/agent.yml"),encoding: str="utf-8"):
-    with open(config_path,"r",encoding=encoding) as f:
-        return yaml.load(f,Loader=yaml.FullLoader)
+    try:
+        with open(config_path,"r",encoding=encoding) as f:
+            return yaml.load(f,Loader=yaml.FullLoader) or {}
+    except FileNotFoundError:
+        return {}
 
 
 def load_database_config(config_path: str=get_abs_path("config/database.yml"),encoding: str="utf-8"):
     """
-    加载数据库配置，优先使用环境变量
+    加载数据库配置（SportsLax 暂不使用，保留接口兼容性）
     """
-    with open(config_path,"r",encoding=encoding) as f:
-        config = yaml.load(f,Loader=yaml.FullLoader)
-    
-    # 从环境变量覆盖配置
-    mysql_config = config.get("mysql", {})
-    mysql_config["host"] = os.getenv("MYSQL_HOST", mysql_config.get("host", "localhost"))
-    mysql_config["user"] = os.getenv("MYSQL_USER", mysql_config.get("user", "root"))
-    mysql_config["password"] = os.getenv("MYSQL_PASSWORD", mysql_config.get("password", ""))
-    mysql_config["database"] = os.getenv("MYSQL_DATABASE", mysql_config.get("database", "chat_history"))
-    config["mysql"] = mysql_config
-    
-    return config
+    try:
+        with open(config_path,"r",encoding=encoding) as f:
+            config = yaml.load(f,Loader=yaml.FullLoader)
+        return config or {}
+    except FileNotFoundError:
+        return {}
 
 
 def get_security_config():

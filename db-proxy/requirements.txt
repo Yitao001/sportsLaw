@@ -1,6 +1,0 @@
-# 数据库代理服务依赖
-fastapi
-uvicorn
-pydantic
-python-dotenv
-mysql-connector-python

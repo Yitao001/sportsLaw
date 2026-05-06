@@ -1,32 +1,39 @@
 version: '3.8'
 
 services:
-  persona-agent:
+  sportslax:
     build: .
-    container_name: persona-agent
+    container_name: sportslax
     restart: always
     ports:
       - "8000:8000"
     environment:
-      # 数据库配置
-      MYSQL_HOST: ${MYSQL_HOST:-localhost}
-      MYSQL_USER: ${MYSQL_USER:-root}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-student_talk_db}
-      
-      # API安全配置
+      # ── 模型配置 ────────────────────────────────────────────
+      MODEL_PROVIDER: ${MODEL_PROVIDER:-siliconflow}
+      CHAT_MODEL_NAME: ${CHAT_MODEL_NAME:-deepseek-ai/DeepSeek-V3}
+      EMBEDDING_MODEL_NAME: ${EMBEDDING_MODEL_NAME:-BAAI/bge-m3}
+
+      # ── LLM API Keys（至少填一个）──────────────────────────
+      SILICONFLOW_API_KEY: ${SILICONFLOW_API_KEY:-}
+      SILICONFLOW_BASE_URL: ${SILICONFLOW_BASE_URL:-https://api.siliconflow.cn/v1}
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+
+      # ── API 安全配置 ─────────────────────────────────────────
       API_KEY: ${API_KEY:-}
       CORS_ORIGINS: ${CORS_ORIGINS:-*}
       RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-60}
-      
-      # 通义千问API Key
-      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+
     volumes:
       - ./logs:/app/logs
-      - ./chroma_db:/app/chroma_db
+      - ./data/chroma_db:/app/data/chroma_db   # 向量库持久化
+      - ./knowledge/vault:/app/knowledge/vault # Obsidian 知识库挂载（可编辑）
+
     networks:
-      - persona-network
+      - sportslax-network
 
 networks:
-  persona-network:
+  sportslax-network:
     driver: bridge

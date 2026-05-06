@@ -100,5 +100,15 @@ class EmbeddingsFactory(BaseModelFactory):
             raise ValueError(f"不支持的嵌入模型提供商: {model_provider}")
 
 
-chat_model = ChatModelFactory().generator()
-embed_model = EmbeddingsFactory().generator()
+def chat_model():
+    """
+    创建并返回对话模型实例
+    """
+    return ChatModelFactory().generator()
+
+
+def embed_model():
+    """
+    创建并返回嵌入模型实例
+    """
+    return EmbeddingsFactory().generator()
