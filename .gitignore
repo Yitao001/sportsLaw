@@ -3,6 +3,13 @@
 .env.local
 .env.*.local
 
+# 部署和指导文档
+DOCKER_DEPLOY.md
+ALIYUN_DEPLOY.md
+WEBDAV_VAULT_SYNC.md
+部署者指南.md
+使用指南.md
+
 # Python
 __pycache__/
 *.py[cod]

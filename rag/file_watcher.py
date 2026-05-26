@@ -32,7 +32,8 @@ def _do_reload() -> None:
 
         vault_docs = load_vault_documents()
         # 清空旧数据后重建（强制重建，不复用）
-        build_vector_store(docs=vault_docs, force_rebuild=True)
+        # 不传 docs，由 build_vector_store 内部统一加载 vault + 内置知识
+        build_vector_store(force_rebuild=True)
 
         from utils.logger_handler import logger
         logger.info(
@@ -111,7 +112,7 @@ def start_vault_watcher() -> bool:
 
         handler = _VaultReloadHandler()
         _observer = Observer()
-        _observer.schedule(handler, str(vault_dir), recursive=False)
+        _observer.schedule(handler, str(vault_dir), recursive=True)
         _observer.start()
 
         logger.info(f"[Vault-Watcher] 已启动，监听目录: {vault_dir}")

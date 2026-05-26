@@ -1,4 +1,4 @@
-"""
+﻿"""
 SportsLax RAG 引擎
 基于向量检索的体育法律知识库检索模块
 支持：国际体育法律条款、CAS仲裁案例、WADA反兴奋剂规则、运动员权利保护等
@@ -274,7 +274,7 @@ def build_vector_store(docs: list[Document] | None = None, force_rebuild: bool =
         logger.info("[RAG] 加载已有向量知识库...")
         return Chroma(
             persist_directory=CHROMA_PERSIST_DIR,
-            embedding_function=embed_model,
+            embedding_function=embed_model(),
             collection_name="sports_law"
         )
 
@@ -301,7 +301,7 @@ def build_vector_store(docs: list[Document] | None = None, force_rebuild: bool =
 
     vectorstore = Chroma.from_documents(
         documents=chunks,
-        embedding=embed_model,
+        embedding=embed_model(),
         persist_directory=CHROMA_PERSIST_DIR,
         collection_name="sports_law"
     )

@@ -8,13 +8,17 @@ WORKDIR /app
 COPY requirements.txt .
 
 # 安装依赖
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir wsgidav cheroot supervisor
 
 # 复制项目文件
 COPY . .
 
-# 暴露端口
-EXPOSE 8000
+# 创建必要的目录
+RUN mkdir -p /app/logs /app/data/chroma_db /app/knowledge/vault
 
-# 启动命令
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
+# 暴露端口
+EXPOSE 8000 8081
+
+# 启动命令（supervisord 管理双进程）
+CMD ["supervisord", "-c", "/app/supervisord.conf"]

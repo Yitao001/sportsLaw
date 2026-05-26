@@ -6,7 +6,8 @@ services:
     container_name: sportslax
     restart: always
     ports:
-      - "8000:8000"
+      - "8000:8000"    # FastAPI
+      - "8081:8081"    # WebDAV
     environment:
       # ── 模型配置 ────────────────────────────────────────────
       MODEL_PROVIDER: ${MODEL_PROVIDER:-siliconflow}
@@ -25,6 +26,10 @@ services:
       API_KEY: ${API_KEY:-}
       CORS_ORIGINS: ${CORS_ORIGINS:-*}
       RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-60}
+
+      # ── WebDAV 认证 ─────────────────────────────────────────
+      WEBDAV_USER: ${WEBDAV_USER:-sportslaw_user}
+      WEBDAV_PASSWORD: ${WEBDAV_PASSWORD:-}
 
     volumes:
       - ./logs:/app/logs
