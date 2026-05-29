@@ -156,7 +156,7 @@ class ReportRequest(BaseModel):
     description: str = Field(
         ...,
         description="运动员描述自身遇到的法律情况（越详细越好）",
-        min_length=10,
+        min_length=1,
         max_length=5000,
         json_schema_extra={
             "example": (
@@ -172,8 +172,8 @@ class ReportRequest(BaseModel):
     @classmethod
     def validate_description(cls, v: str) -> str:
         v = v.strip()
-        if len(v) < 10:
-            raise ValueError("情况描述至少需要10个字符")
+        if not v:
+            raise ValueError("情况描述不能为空")
         return v
 
 
